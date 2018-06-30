@@ -1,0 +1,112 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=4.5cm,right=4.5cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{\bf Artificial Intelligence}
+
+\author{Kamil Plucinski 132307}
+\pagestyle{fancy}
+\begin{document}
+\maketitle
+
+\vspace{1cm}
+I am going to tell you about Artificial Intelligence - in my opinion the fastest growing area in IT and in addition it is the most interesting one! All programs with ability to learn like people are called AI. I am going to focus on Machine Learning. Machine learning is a subset of AI which use statistical method in Algorithms to learn without being explicit programmed. I would like this text to be readable for humans, so I am going to give you real life examples and pictures. I hope you won`t be bored ;)\\
+Machine Learning contains two main types: \textbf{supervised learning} and \textbf{unsupervised learning}. Supervised learning is about algorithms which use data sets composed of paired input data and expected output value. Unsupervised learning (often called \textit{Deep Learning}) use clear data sets and don't know the result - it can only guess some random result and estimate quality of solution.
+
+\section{Calculus}
+At the beginning I would like to give you a sense of what is calculus. We will be needing it in near future. Calculus is a function created from base function which can tell us how fast it is changing and in what directory.\\
+Look this is $y=x^2$  and calculus of this function is $y=2x$\\
+\includegraphics[width=\textwidth]{l.png}
+And now in point $x=-3$ calculus is equal $-6$ so we know that function is decreasing fast, in $x=-1$ calculus is equal $-2$ so function is decreasing but more slowly. In $x=0$ calculus is equal $0$, so this is local minimum (or maximum) but we know that this is minimum from picture. For $x=1$ calculus is equal $ 1$ so we know that function is increasing.
+
+\section{Supervised learning}
+Supervised learning usually solve two types of problems: Regression and Classification.\\
+\includegraphics[width=\textwidth]{0.jpg}
+\subsection{Regression}
+Imagine that you have data set containing two parameters - second parameter is dependent on the first: size of the house and the cost of the house. Our goal is to train model in a way that we give him size and it give us estimate cost. \\
+\includegraphics[width=\textwidth]{c.jpg}
+This dotted red line is our model. We can write this model as function like:
+$$
+y = aX + b$$\\
+where:\\
+$y$ = price of the house\\
+$X$ = size of the house\\
+$a,b$ = parameters of linear function - $a$ tells us how fast the price grows depending on the size, $b$ is a some initial value\\\\
+We want to know how good is our model. For this we will calculate $cost\; \;function$ - this is a sum of all squared errors. By error I mean distance between our model and the value in data set.
+
+$$ cost\; \;function = sum(Actual\; \;house\; \;price\; \;-\; \;Predicted\; \;house\; \;price)^2 $$
+
+Okay, but where is the \textit{learning}? Where can I find this $a, b$ parameters? In this place we could use algorithm called \textit{Gradient Descent} which help us minimize cost function. \\
+If We draw a chart of changes cost function depending on $a,b$ parameters, it looks like this:\\ 
+\includegraphics[width=\textwidth]{d.jpg}
+This look like $y=x^2$ because we squared all errors, but it is not important. The most important thins on this chart is that there is only one local minimum, so we know that there is only one global  minimum. In this case we can use calculus. After using calculus on our cost function we will know in which direction we should change parameters and how strong.\\
+So, we will be changing our parameters until the error stops decreasing, and thats it ;)\\
+\includegraphics[width=\textwidth]{b.png}
+
+\subsection{Classification}
+Imagine that you have a data set with two parameters and decision, e.g. age, tumor size and decision if it is cancer. In contrast to first example you don`t want to estimate any value but guess the decision.\\
+\includegraphics[width=\textwidth]{e.png}
+Like in the first example we would like to find a function which splits data set on two areas for two different decisions. For this we will use something called $Logistic\; \;Regression$. We will do everything like in first example, but we have to change the cost function a little - because we now have one more parameter.\\
+First we have to know how the function will look for estimated probability. We will be using $sigmoid\; \;function$.
+$$ Sigmoid(z) = \frac{1}{1+e^{-z}} $$
+where
+$$ z = aX_1 + b	X_2 + c $$
+$X_1$ - age\\
+$X_2$ - tumor size\\
+Sigmoid function look like this:\\
+\includegraphics[width=\textwidth]{f.png}
+If $sigmoid >= 0.5 $ we can assume that this is cancer. Okay, we know how to estimate probability using our data, but how to apply this for cost function?
+
+$$Total\; \;cost = \frac{1}{n}\sum_{1}^{n}Cost(Sigmoid(X^{(i)}), Y^{(i)})$$
+$$Cost(Sigmoid(X), Y) = - \log{(Sigmoid(X))} \; \;if\; \;Y=1$$ 
+$$Cost(Sigmoid(X), Y) = - \log{(1-Sigmoid(X))} \; \;if\; \;Y=0$$
+where:\\
+$X^{(i)}$ - is vector of $X_1$ and $X_2$\\
+$Y^{(i)}$ - is decision\\
+
+This could be a little confusing why suddenly there is a logarithm. Just look at this picture:\\
+\includegraphics[width=\textwidth]{g.png}
+$h_{\theta}(x)$ means $Sigmoid(X)$. Imagine that we evaluate vector $X$ using $Sigmoid$ on 0.98 so we are 98\% sure. If $Y = 1$ (so we are right) in the data set, our cost will be very close to 0, but if $Y = 0$ (we are very wrong), then our cost is going to infinity so cost will be very very big. \\
+Learning parameters looks the same as in the first example - we calculate calculus and changing parameters $a, b, c$.\\
+\includegraphics[width=\textwidth]{h.jpg}	
+
+
+\section{Unsupervised learning}
+In all previous examples we have hard linear dependencies between variables, but if dependency isn`t linear we could use neural network.\\
+At the beginning - what is a neuron?\\
+\includegraphics[width=\textwidth]{i.png}
+Looks familiar? That is exactly the same function like in the classification problem. A layer in neural network always has $bias$ - some const value e.g. 1. So we could write function in neuron like this:$$Sigmoid(aX_1 + bX_2 + c)$$
+Pretty easy. So what we can do with neuron? For example we could create logic function - OR. If one of input values is equal to one, output is 1.\\
+\includegraphics[width=\textwidth]{j.png}
+$g$ in the picture stands for our sigmoid function. We can also create AND, NOT functions because they are linear, but we can`t make XNOR by manipulating 3 parameters in one neuron. XNOR function is equal to 1 if values are the same. So what can we do? We can create one hidden layer! Look at this picture: \\
+\includegraphics[width=\textwidth]{k.png}
+I give you a very easy example how we calculate output in neural network, but you could ask "Okay, but where is the learning!?". You can probably guess it looks the same as before and you're right. I Won`t show you clear mathematic formula, because it is long and difficult in my opinion, if you want you can find it as $backpropagation$ in google, but I will give you a sense of it. We have output, and we know if it is good or not, so we start teaching our neural network beginning with the last neuron. As you can see one neuron propagates changes in all neurons in the next layer, so when we learn we have to keep in mind all next errors. In the example above for $a_1$ and $a_2$ learning, it is typical like before, but how big is the error for $x_2$? This is weighted sum of errors of the next layer, e.g.
+$30Error(a_1) -10Error(a_2)$ If we know pattern, we can create calculus and find new parameters.\\\\
+Interesting picture, this is the network that recognizes the number eight:
+\nopagebreak
+\\
+\includegraphics[width=\textwidth]{layer.png}
+
+
+
+\begin{thebibliography}{9}
+\bibitem{latexcompanion} 
+Machine Learning by Stanford University
+\textit on www.coursea.org with Andrew Ng
+ 
+\bibitem{knuthwebsite} 
+\texttt{$http://ml-cheatsheet.readthedocs.io/en/latest/$}
+\end{thebibliography}
+\end{document}
